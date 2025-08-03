@@ -1,9 +1,16 @@
-[gd_scene load_steps=3 format=3 uid="uid://f8uin6qensed"]
+[gd_scene load_steps=5 format=3 uid="uid://f8uin6qensed"]
 
 [ext_resource type="Script" uid="uid://dago2po38bctt" path="res://Scripts/pause_menu.gd" id="1_emv3i"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_5mq57"]
 font_size = 64
+
+[sub_resource type="InputEventAction" id="InputEventAction_emv3i"]
+action = &"ui_cancel"
+pressed = true
+
+[sub_resource type="Shortcut" id="Shortcut_k0w1u"]
+events = [SubResource("InputEventAction_emv3i")]
 
 [node name="PauseMenu" type="ColorRect"]
 process_mode = 3
@@ -49,6 +56,7 @@ layout_mode = 2
 [node name="Resume" type="Button" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 32
+shortcut = SubResource("Shortcut_k0w1u")
 text = "Resume"
 
 [node name="Restart" type="Button" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer"]
@@ -61,6 +69,6 @@ layout_mode = 2
 theme_override_font_sizes/font_size = 32
 text = "Quit"
 
-[connection signal="button_down" from="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/Resume" to="." method="_on_resume_button_down"]
+[connection signal="pressed" from="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/Resume" to="." method="_on_resume_pressed"]
 [connection signal="button_down" from="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/Restart" to="." method="_on_restart_button_down"]
 [connection signal="button_down" from="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/Quit" to="." method="_on_quit_button_down"]

@@ -1,12 +1,14 @@
-[gd_scene load_steps=4 format=3 uid="uid://blyfeuat57hw"]
+[gd_scene load_steps=6 format=3 uid="uid://blyfeuat57hw"]
 
 [ext_resource type="Script" uid="uid://wk0wsv2nl0cf" path="res://Scripts/obstacle.gd" id="1_15o2q"]
+[ext_resource type="PackedScene" uid="uid://d1ctyh4n45o7a" path="res://Assets/Obstacle.glb" id="2_rvx1i"]
+[ext_resource type="Texture2D" uid="uid://dtqums3woh4tk" path="res://Assets/Textures/Obstacle.png" id="3_a6yce"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_f8t61"]
 size = Vector3(1.8, 1.8, 1)
 
-[sub_resource type="BoxMesh" id="BoxMesh_15o2q"]
-size = Vector3(1.8, 1.8, 1)
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_p763d"]
+albedo_texture = ExtResource("3_a6yce")
 
 [node name="Obstacle" type="Area3D"]
 collision_layer = 8
@@ -16,7 +18,11 @@ script = ExtResource("1_15o2q")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("BoxShape3D_f8t61")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-mesh = SubResource("BoxMesh_15o2q")
+[node name="Obstacle2" parent="." instance=ExtResource("2_rvx1i")]
+
+[node name="Obstacle" parent="Obstacle2" index="0"]
+material_override = SubResource("StandardMaterial3D_p763d")
 
 [connection signal="area_entered" from="." to="." method="_on_area_entered"]
+
+[editable path="Obstacle2"]

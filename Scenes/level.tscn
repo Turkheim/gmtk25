@@ -1,16 +1,22 @@
-[gd_scene load_steps=30 format=3 uid="uid://b03ysub3f33tc"]
+[gd_scene load_steps=40 format=3 uid="uid://b03ysub3f33tc"]
 
 [ext_resource type="Script" uid="uid://uv8xk3qphvq2" path="res://Scripts/level.gd" id="1_8c0lf"]
 [ext_resource type="Script" uid="uid://35mfpau0eygy" path="res://Scripts/player.gd" id="2_754fn"]
 [ext_resource type="Script" uid="uid://bwpd6rs7lqth3" path="res://Scripts/restart_obstacles.gd" id="3_bvt00"]
 [ext_resource type="AudioStream" uid="uid://dc1vci4il3ulw" path="res://Assets/Sounds/PlayerDead.wav" id="3_qxfql"]
 [ext_resource type="PackedScene" uid="uid://btmuvgs554pe2" path="res://Scenes/spawner.tscn" id="4_oqgf2"]
+[ext_resource type="PackedScene" uid="uid://da28lod18xksi" path="res://Assets/Player.glb" id="4_pa6b8"]
+[ext_resource type="Texture2D" uid="uid://0wsgsn55hcnh" path="res://Assets/Textures/Player.png" id="5_crh0w"]
 [ext_resource type="PackedScene" uid="uid://dg36r15gyo6w8" path="res://Scenes/Turret.tscn" id="5_qxfql"]
 [ext_resource type="PackedScene" uid="uid://b108embdp1fyi" path="res://Scenes/terrain.tscn" id="6_ha31o"]
 [ext_resource type="PackedScene" uid="uid://f8uin6qensed" path="res://Scenes/pause_menu.tscn" id="7_pa6b8"]
 [ext_resource type="PackedScene" uid="uid://cwaks7cinsij1" path="res://Scenes/lose_menu.tscn" id="8_754fn"]
 [ext_resource type="PackedScene" uid="uid://mtfwldcgvell" path="res://Scenes/PlayerLife.tscn" id="9_bvt00"]
 [ext_resource type="AudioStream" uid="uid://c3sumwxyq3xpl" path="res://Assets/Sounds/Gameplay.wav" id="10_oqgf2"]
+[ext_resource type="Script" uid="uid://b7yatrk0ab3f3" path="res://Scenes/control.gd" id="14_crh0w"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_c7le1"]
+font_size = 32
 
 [sub_resource type="Curve3D" id="Curve3D_uayn6"]
 _data = {
@@ -71,6 +77,105 @@ material = SubResource("StandardMaterial3D_nu5x1")
 radial_segments = 8
 rings = 5
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_c7le1"]
+albedo_texture = ExtResource("5_crh0w")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_pa6b8"]
+shading_mode = 0
+albedo_color = Color(2, 0.443, 0, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_c7le1"]
+radius = 0.09
+height = 0.5
+radial_segments = 12
+rings = 6
+
+[sub_resource type="Animation" id="Animation_nngtn"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Player/Flame:material_override:albedo_color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(2, 0.443, 0, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Player/Flame:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0.999999, 1, 0.999999)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Player/Flame2:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0.999999, 1, 0.999999)]
+}
+
+[sub_resource type="Animation" id="Animation_2klc5"]
+resource_name = "flicker"
+length = 0.2
+loop_mode = 2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Player/Flame:material_override:albedo_color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(2, 0.443, 0, 1), Color(2, 0.894118, 0, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Player/Flame:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(0.999999, 1, 0.999999), Vector3(0.867, 1.3, 0.867)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Player/Flame2:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(0.999999, 1, 0.999999), Vector3(1, 1.3, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_vofx3"]
+_data = {
+&"RESET": SubResource("Animation_nngtn"),
+&"flicker": SubResource("Animation_2klc5")
+}
+
 [sub_resource type="BoxShape3D" id="BoxShape3D_b3yh3"]
 size = Vector3(20, 8, 8)
 
@@ -118,6 +223,34 @@ _data = {
 [node name="Level" type="Node3D"]
 script = ExtResource("1_8c0lf")
 
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("14_crh0w")
+metadata/_edit_use_anchors_ = true
+
+[node name="Timer" type="Timer" parent="Control"]
+autostart = true
+
+[node name="Label" type="Label" parent="Control"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -52.0
+offset_top = -78.0
+offset_right = 52.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "0"
+label_settings = SubResource("LabelSettings_c7le1")
+
 [node name="Path3D" type="Path3D" parent="."]
 transform = Transform3D(-1, 8.44439e-08, 2.26267e-08, 0, 0.258819, -0.965926, -8.74228e-08, -0.965926, -0.258819, 0, 0, 0)
 curve = SubResource("Curve3D_uayn6")
@@ -140,6 +273,7 @@ shape = SubResource("CapsuleShape3D_b3yh3")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Path3D/PathFollow3D/Player"]
 transform = Transform3D(1, -8.99281e-15, 3.72529e-09, 3.72529e-09, -4.37114e-08, -1, -3.55271e-15, 1, -4.37114e-08, 0.00695705, -0.199879, -1.77189e-08)
+visible = false
 material_override = SubResource("StandardMaterial3D_k6vu1")
 mesh = SubResource("CapsuleMesh_uayn6")
 skeleton = NodePath("../..")
@@ -173,6 +307,29 @@ process_material = SubResource("ParticleProcessMaterial_pa6b8")
 draw_pass_1 = SubResource("SphereMesh_crh0w")
 
 [node name="Death" type="Timer" parent="Path3D/PathFollow3D/Player"]
+
+[node name="Player" parent="Path3D/PathFollow3D/Player" instance=ExtResource("4_pa6b8")]
+transform = Transform3D(-0.0347652, 0.999395, 0.00121009, 0.99879, 0.0347863, -0.0347651, -0.0347861, 8.43607e-09, -0.999395, 0.00695705, -0.199881, -1.77189e-08)
+
+[node name="Plane" parent="Path3D/PathFollow3D/Player/Player" index="0"]
+transform = Transform3D(0.00121004, 0.999395, 0.0347652, -0.999395, -4.37114e-08, 0.0347862, 0.0347651, -0.0347863, 0.99879, 0, 0, 0)
+material_override = SubResource("StandardMaterial3D_c7le1")
+
+[node name="Flame" type="MeshInstance3D" parent="Path3D/PathFollow3D/Player/Player"]
+transform = Transform3D(0.998789, 0.0347862, -0.0347652, -0.0347863, -4.29891e-08, -0.999394, -0.0347652, 0.999395, 0.00121004, -0.0207901, -0.22, -0.597289)
+material_override = SubResource("StandardMaterial3D_pa6b8")
+mesh = SubResource("SphereMesh_c7le1")
+
+[node name="Flame2" type="MeshInstance3D" parent="Path3D/PathFollow3D/Player/Player"]
+transform = Transform3D(0.998789, 0.0347862, -0.0347652, -0.0347863, -4.29891e-08, -0.999394, -0.0347652, 0.999395, 0.00121004, -0.0207901, 0.179999, -0.597289)
+material_override = SubResource("StandardMaterial3D_pa6b8")
+mesh = SubResource("SphereMesh_c7le1")
+
+[node name="Animate" type="AnimationPlayer" parent="Path3D/PathFollow3D/Player"]
+libraries = {
+&"": SubResource("AnimationLibrary_vofx3")
+}
+autoplay = "flicker"
 
 [node name="ActivateTurret" type="Area3D" parent="Path3D/PathFollow3D"]
 transform = Transform3D(1, -1.86265e-08, -5.77316e-15, 1.86265e-08, 1, 7.10543e-15, -2.30926e-14, 4.9738e-14, 1, 0.0347872, 0.000602722, -5.63664e-07)
@@ -254,7 +411,7 @@ visible = false
 visible = false
 
 [node name="Spawner5" parent="Path3D" instance=ExtResource("4_oqgf2")]
-transform = Transform3D(-0.0162415, -0.129171, -0.995521, -0.593402, 0.799348, -0.0948026, 0.804742, 0.586817, -0.0899975, 1.74835, -13.7502, -13.9812)
+transform = Transform3D(-0.0162415, -0.129171, -0.99552, -0.593402, 0.799347, -0.0948024, 0.804742, 0.586817, -0.0899974, 1.74835, -13.7502, -13.9812)
 progress = 125.377
 
 [node name="Obstacle3" parent="Path3D/Spawner5" index="1"]
@@ -283,7 +440,7 @@ visible = false
 visible = false
 
 [node name="Spawner7" parent="Path3D" instance=ExtResource("4_oqgf2")]
-transform = Transform3D(0.190289, 0.0642465, 0.983614, 0.980377, -0.0648049, -0.186943, 0.0515229, 0.995824, -0.0756243, 3.9391, 11.9168, 11.469)
+transform = Transform3D(0.190289, 0.0642464, 0.983614, 0.980377, -0.0648048, -0.186943, 0.0515229, 0.995823, -0.0756243, 3.9391, 11.9168, 11.469)
 progress = 175.528
 
 [node name="Obstacle3" parent="Path3D/Spawner7" index="1"]
@@ -293,7 +450,7 @@ visible = false
 visible = false
 
 [node name="Spawner8" parent="Path3D" instance=ExtResource("4_oqgf2")]
-transform = Transform3D(-0.373279, -0.703234, 0.607543, 0.799214, 0.0874277, 0.597074, -0.471083, 0.705557, 0.531557, -19.4719, 9.01097, 7.21887)
+transform = Transform3D(-0.373279, -0.703233, 0.607543, 0.799214, 0.0874275, 0.597074, -0.471083, 0.705556, 0.531557, -19.4719, 9.01097, 7.21887)
 progress = 200.604
 
 [node name="Obstacle" parent="Path3D/Spawner8" index="0"]
@@ -303,7 +460,7 @@ visible = false
 visible = false
 
 [node name="Spawner9" parent="Path3D" instance=ExtResource("4_oqgf2")]
-transform = Transform3D(0.141973, -0.871073, -0.472096, 0.672368, -0.263741, 0.69445, -0.726474, -0.41433, 0.550468, -20.3888, -9.81189, -7.5639)
+transform = Transform3D(0.141973, -0.871073, -0.472096, 0.672368, -0.263741, 0.694449, -0.726474, -0.41433, 0.550467, -20.3888, -9.81189, -7.5639)
 progress = 225.679
 
 [node name="Obstacle2" parent="Path3D/Spawner9" index="3"]
@@ -374,11 +531,13 @@ unique_name_in_owner = true
 stream = ExtResource("10_oqgf2")
 autoplay = true
 
+[connection signal="timeout" from="Control/Timer" to="Control" method="_on_timer_timeout"]
 [connection signal="timeout" from="Path3D/PathFollow3D/Player/Death" to="Path3D/PathFollow3D/Player" method="_on_death_timeout"]
 [connection signal="area_entered" from="Path3D/PathFollow3D/ActivateTurret" to="Path3D/PathFollow3D/Player" method="_on_activate_turret_area_entered"]
 [connection signal="area_exited" from="Path3D/PathFollow3D/ActivateTurret" to="Path3D/PathFollow3D/Player" method="_on_activate_turret_area_exited"]
 [connection signal="area_exited" from="Path3D/PathFollow3D/RestartObstacles" to="Path3D/PathFollow3D/RestartObstacles" method="_on_area_exited"]
 
+[editable path="Path3D/PathFollow3D/Player/Player"]
 [editable path="Path3D/Spawner"]
 [editable path="Path3D/Spawner2"]
 [editable path="Path3D/Spawner3"]

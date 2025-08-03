@@ -15,9 +15,6 @@ func _pause():
 	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 	
 	
-func _on_resume_button_down() -> void:
-	_unpause()
-
 
 func _on_restart_button_down() -> void:
 	_unpause()
@@ -25,3 +22,7 @@ func _on_restart_button_down() -> void:
 
 func _on_quit_button_down() -> void:
 	get_tree().quit()
+
+
+func _on_resume_pressed() -> void:
+	_unpause()

@@ -1,9 +1,17 @@
-[gd_scene load_steps=3 format=3 uid="uid://cwaks7cinsij1"]
+[gd_scene load_steps=6 format=3 uid="uid://cwaks7cinsij1"]
 
 [ext_resource type="Script" uid="uid://cf3525to0m1rn" path="res://Scripts/lose_menu.gd" id="1_f523n"]
+[ext_resource type="AudioStream" uid="uid://b505uwrvivlmr" path="res://Assets/Sounds/Theme.wav" id="2_iy3yv"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_5mq57"]
 font_size = 64
+
+[sub_resource type="InputEventAction" id="InputEventAction_f523n"]
+action = &"ui_accept"
+pressed = true
+
+[sub_resource type="Shortcut" id="Shortcut_iy3yv"]
+events = [SubResource("InputEventAction_f523n")]
 
 [node name="LoseMenu" type="ColorRect"]
 process_mode = 3
@@ -44,12 +52,17 @@ layout_mode = 2
 text = "You Died"
 label_settings = SubResource("LabelSettings_5mq57")
 
+[node name="Score" type="Label" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Your score is:"
+
 [node name="HSeparator" type="HSeparator" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
 
 [node name="Restart" type="Button" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 32
+shortcut = SubResource("Shortcut_iy3yv")
 text = "Restart"
 
 [node name="Quit" type="Button" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer"]
@@ -57,5 +70,9 @@ layout_mode = 2
 theme_override_font_sizes/font_size = 32
 text = "Quit"
 
-[connection signal="button_down" from="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/Restart" to="." method="_on_restart_button_down"]
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("2_iy3yv")
+pitch_scale = 0.8
+
+[connection signal="pressed" from="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/Restart" to="." method="_on_restart_pressed"]
 [connection signal="button_down" from="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/Quit" to="." method="_on_quit_button_down"]

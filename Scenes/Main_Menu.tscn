@@ -1,4 +1,4 @@
-[gd_scene load_steps=4 format=3 uid="uid://c33bk8il3dpox"]
+[gd_scene load_steps=6 format=3 uid="uid://c33bk8il3dpox"]
 
 [ext_resource type="Script" uid="uid://dehxmsmel4qui" path="res://Scripts/main_menu.gd" id="1_c4tk2"]
 
@@ -11,6 +11,13 @@ corner_radius_bottom_left = 32
 
 [sub_resource type="LabelSettings" id="LabelSettings_5mq57"]
 font_size = 64
+
+[sub_resource type="InputEventAction" id="InputEventAction_c4tk2"]
+action = &"ui_accept"
+pressed = true
+
+[sub_resource type="Shortcut" id="Shortcut_rmbjf"]
+events = [SubResource("InputEventAction_c4tk2")]
 
 [node name="MainMenu" type="ColorRect"]
 process_mode = 3
@@ -60,6 +67,7 @@ layout_mode = 2
 layout_mode = 2
 size_flags_horizontal = 4
 theme_override_font_sizes/font_size = 32
+shortcut = SubResource("Shortcut_rmbjf")
 text = "Play"
 
 [node name="Quit" type="Button" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer"]
@@ -68,5 +76,5 @@ size_flags_horizontal = 4
 theme_override_font_sizes/font_size = 32
 text = "Quit"
 
-[connection signal="button_down" from="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/Resume" to="." method="_on_resume_button_down"]
+[connection signal="pressed" from="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/Resume" to="." method="_on_resume_pressed"]
 [connection signal="button_down" from="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/Quit" to="." method="_on_quit_button_down"]

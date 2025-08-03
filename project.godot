@@ -11,13 +11,20 @@ config_version=5
 [application]
 
 config/name="GMTK25"
-run/main_scene="uid://b03ysub3f33tc"
+run/main_scene="uid://y5t7gna6tyxq"
 config/features=PackedStringArray("4.4", "GL Compatibility")
+boot_splash/bg_color=Color(0.0361473, 0.149874, 0.228055, 1)
 config/icon="res://icon.svg"
 
 [global_group]
 
 Player=""
+
+[gui]
+
+fonts/dynamic_fonts/use_oversampling=false
+theme/custom_font="uid://nnagwbrl2gcw"
+theme/default_font_antialiasing=0
 
 [rendering]
 

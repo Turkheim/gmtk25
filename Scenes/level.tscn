@@ -1,0 +1,390 @@
+[gd_scene load_steps=30 format=3 uid="uid://b03ysub3f33tc"]
+
+[ext_resource type="Script" uid="uid://uv8xk3qphvq2" path="res://Scripts/level.gd" id="1_8c0lf"]
+[ext_resource type="Script" uid="uid://35mfpau0eygy" path="res://Scripts/player.gd" id="2_754fn"]
+[ext_resource type="Script" uid="uid://bwpd6rs7lqth3" path="res://Scripts/restart_obstacles.gd" id="3_bvt00"]
+[ext_resource type="AudioStream" uid="uid://dc1vci4il3ulw" path="res://Assets/Sounds/PlayerDead.wav" id="3_qxfql"]
+[ext_resource type="PackedScene" uid="uid://btmuvgs554pe2" path="res://Scenes/spawner.tscn" id="4_oqgf2"]
+[ext_resource type="PackedScene" uid="uid://dg36r15gyo6w8" path="res://Scenes/Turret.tscn" id="5_qxfql"]
+[ext_resource type="PackedScene" uid="uid://b108embdp1fyi" path="res://Scenes/terrain.tscn" id="6_ha31o"]
+[ext_resource type="PackedScene" uid="uid://f8uin6qensed" path="res://Scenes/pause_menu.tscn" id="7_pa6b8"]
+[ext_resource type="PackedScene" uid="uid://cwaks7cinsij1" path="res://Scenes/lose_menu.tscn" id="8_754fn"]
+[ext_resource type="PackedScene" uid="uid://mtfwldcgvell" path="res://Scenes/PlayerLife.tscn" id="9_bvt00"]
+[ext_resource type="AudioStream" uid="uid://c3sumwxyq3xpl" path="res://Assets/Sounds/Gameplay.wav" id="10_oqgf2"]
+
+[sub_resource type="Curve3D" id="Curve3D_uayn6"]
+_data = {
+"points": PackedVector3Array(-14, -1, 0, 14, 0, 0, -2.01072e-06, -19.6281, -15.6121, 0, -12, -8, 0, 12, 8, 23, -1.94221e-06, -5.20414e-07, 8, 1, 1, -8, -1, -1, 1.31134e-06, 13.9712, 5.81414, 0, 7, 5, 0, -7, -5, -17, 1.43555e-06, 3.84654e-07, -11, 0, 0, 11, 0, 0, -1.48619e-06, -13.8325, -14.0592, 0, -4, -6, 0, 4, 6, 17, -0.25882, 0.965925, 14, -1, 0, -14, 1, 0, 1.31134e-06, 12.4183, 11.6097, 1, 12, 9, -1, -12, -9, -23, 1.94221e-06, 5.20414e-07, -11, 0, 0, 11, 0, 0, -0.1, -19.64, -15.625),
+"tilts": PackedFloat32Array(-2.845, -1.309, 1.5708, 1.5708, 0.57, 1.8326, 4.965, 4.745, 3.435)
+}
+point_count = 9
+up_vector_enabled = false
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_b3yh3"]
+radius = 0.2
+height = 1.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_k6vu1"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_uayn6"]
+radius = 0.2
+height = 1.0
+radial_segments = 12
+rings = 3
+
+[sub_resource type="BoxMesh" id="BoxMesh_b3yh3"]
+size = Vector3(2, 0.1, 0.2)
+
+[sub_resource type="BoxMesh" id="BoxMesh_5mq57"]
+size = Vector3(0.1, 0.5, 0.2)
+
+[sub_resource type="Gradient" id="Gradient_qxfql"]
+offsets = PackedFloat32Array(0, 0.43956, 1)
+colors = PackedColorArray(2, 2, 2, 1, 2, 0.68, 0.337, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_fgscc"]
+gradient = SubResource("Gradient_qxfql")
+use_hdr = true
+
+[sub_resource type="Curve" id="Curve_ha31o"]
+_data = [Vector2(0, 0.443614), 0.0, 0.0, 0, 0, Vector2(0.230769, 0.973505), 0.0, 0.0, 0, 0, Vector2(0.687657, 0.963415), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 4
+
+[sub_resource type="CurveTexture" id="CurveTexture_labbc"]
+curve = SubResource("Curve_ha31o")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_pa6b8"]
+direction = Vector3(0, 1, 0)
+initial_velocity_min = 6.0
+initial_velocity_max = 6.0
+scale_curve = SubResource("CurveTexture_labbc")
+color_ramp = SubResource("GradientTexture1D_fgscc")
+hue_variation_min = -0.02
+hue_variation_max = 0.11
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_nu5x1"]
+shading_mode = 0
+vertex_color_use_as_albedo = true
+
+[sub_resource type="SphereMesh" id="SphereMesh_crh0w"]
+material = SubResource("StandardMaterial3D_nu5x1")
+radial_segments = 8
+rings = 5
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_b3yh3"]
+size = Vector3(20, 8, 8)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_5mq57"]
+size = Vector3(20, 10, 2)
+
+[sub_resource type="Animation" id="Animation_5mq57"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("PathFollow3D:progress_ratio")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="Animation" id="Animation_k6vu1"]
+resource_name = "rail"
+length = 20.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("PathFollow3D:progress_ratio")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 20),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 1.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_wx8dc"]
+_data = {
+&"RESET": SubResource("Animation_5mq57"),
+&"rail": SubResource("Animation_k6vu1")
+}
+
+[node name="Level" type="Node3D"]
+script = ExtResource("1_8c0lf")
+
+[node name="Path3D" type="Path3D" parent="."]
+transform = Transform3D(-1, 8.44439e-08, 2.26267e-08, 0, 0.258819, -0.965926, -8.74228e-08, -0.965926, -0.258819, 0, 0, 0)
+curve = SubResource("Curve3D_uayn6")
+
+[node name="PathFollow3D" type="PathFollow3D" parent="Path3D"]
+transform = Transform3D(-4.37113e-08, 0, -1.00393, 0.292263, -0.956337, -1.28254e-08, -0.956337, -0.292263, 4.19671e-08, -2.01072e-06, -19.6281, -15.6121)
+
+[node name="Camera3D" type="Camera3D" parent="Path3D/PathFollow3D"]
+transform = Transform3D(1, 1.86265e-08, 2.32831e-09, 7.45058e-09, 0.990197, 0.139685, -5.55112e-15, -0.139159, 0.986467, 0, 0, 1.99994)
+fov = 120.0
+
+[node name="Player" type="Area3D" parent="Path3D/PathFollow3D" groups=["Player"]]
+unique_name_in_owner = true
+transform = Transform3D(1, -1.86265e-08, 2.22045e-16, 1.86265e-08, 1, 0, -2.4869e-14, 4.9738e-14, 1, 0.0347872, 0.00060463, -5.63664e-07)
+script = ExtResource("2_754fn")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Path3D/PathFollow3D/Player"]
+transform = Transform3D(1, -8.99281e-15, 0, 0, -4.37114e-08, -1, -2.22045e-16, 1, -4.37114e-08, 0.00695801, -0.199879, -1.77187e-08)
+shape = SubResource("CapsuleShape3D_b3yh3")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Path3D/PathFollow3D/Player"]
+transform = Transform3D(1, -8.99281e-15, 3.72529e-09, 3.72529e-09, -4.37114e-08, -1, -3.55271e-15, 1, -4.37114e-08, 0.00695705, -0.199879, -1.77189e-08)
+material_override = SubResource("StandardMaterial3D_k6vu1")
+mesh = SubResource("CapsuleMesh_uayn6")
+skeleton = NodePath("../..")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="Path3D/PathFollow3D/Player/MeshInstance3D"]
+transform = Transform3D(1, 0, -2.44249e-15, 1.77636e-15, -4.37114e-08, 1, 3.72529e-09, -1, -4.37114e-08, 9.53674e-07, 0.4, 0.0155525)
+mesh = SubResource("BoxMesh_b3yh3")
+skeleton = NodePath("../..")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="Path3D/PathFollow3D/Player/MeshInstance3D"]
+transform = Transform3D(1, 0, -2.44249e-15, 1.77636e-15, -4.37114e-08, 1, 3.72529e-09, -1, -4.37114e-08, 9.53674e-07, 0.4, -0.284447)
+mesh = SubResource("BoxMesh_5mq57")
+skeleton = NodePath("../..")
+
+[node name="PlayerTarget" type="Marker3D" parent="Path3D/PathFollow3D/Player"]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, -1.17684e-14, 0, 1, 2.13163e-14, -2.22045e-16, 2.13163e-14, 1, 0.00695801, -0.199879, -5)
+
+[node name="Damage" type="AudioStreamPlayer" parent="Path3D/PathFollow3D/Player"]
+stream = ExtResource("3_qxfql")
+
+[node name="Boom" type="GPUParticles3D" parent="Path3D/PathFollow3D/Player"]
+transform = Transform3D(0.99879, 0.0347652, -0.0347863, 0.0347653, 0.00121004, 0.999395, 0.0347862, -0.999395, -4.37114e-08, 0.00695705, -0.199881, -1.77189e-08)
+emitting = false
+amount = 24
+lifetime = 0.5
+one_shot = true
+explosiveness = 1.0
+fixed_fps = 60
+process_material = SubResource("ParticleProcessMaterial_pa6b8")
+draw_pass_1 = SubResource("SphereMesh_crh0w")
+
+[node name="Death" type="Timer" parent="Path3D/PathFollow3D/Player"]
+
+[node name="ActivateTurret" type="Area3D" parent="Path3D/PathFollow3D"]
+transform = Transform3D(1, -1.86265e-08, -5.77316e-15, 1.86265e-08, 1, 7.10543e-15, -2.30926e-14, 4.9738e-14, 1, 0.0347872, 0.000602722, -5.63664e-07)
+collision_layer = 4
+collision_mask = 2
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Path3D/PathFollow3D/ActivateTurret"]
+transform = Transform3D(1, -5.55068e-07, -2.65565e-13, 0, 1, 7.66676e-12, 2.18492e-13, -6.89226e-13, 1, -9.53674e-07, 4.00001, -6)
+shape = SubResource("BoxShape3D_b3yh3")
+
+[node name="RestartObstacles" type="Area3D" parent="Path3D/PathFollow3D"]
+transform = Transform3D(1, -1.86265e-08, -5.77316e-15, 1.86265e-08, 1, 7.10543e-15, -2.30926e-14, 4.9738e-14, 1, 0.0347872, 0.000602722, -5.63664e-07)
+collision_layer = 8
+collision_mask = 8
+script = ExtResource("3_bvt00")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Path3D/PathFollow3D/RestartObstacles"]
+transform = Transform3D(1, -5.55068e-07, -1.09779e-12, 0, 1, 9.45732e-12, 2.20046e-13, -6.89226e-13, 1, 0, 3.00002, 3)
+shape = SubResource("BoxShape3D_5mq57")
+
+[node name="ObstacleSpawner" type="Marker3D" parent="Path3D/PathFollow3D/RestartObstacles"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2)
+
+[node name="Spawner" parent="Path3D" instance=ExtResource("4_oqgf2")]
+transform = Transform3D(-0.233589, 0.867583, -0.440803, 0.68965, -0.170454, -0.706661, -0.685434, -0.467165, -0.560786, 20.2333, -10.2871, -7.49586)
+
+[node name="Obstacle2" parent="Path3D/Spawner" index="3"]
+visible = false
+
+[node name="Obstacle4" parent="Path3D/Spawner" index="4"]
+visible = false
+
+[node name="Obstacle6" parent="Path3D/Spawner" index="5"]
+visible = false
+
+[node name="Spawner2" parent="Path3D" instance=ExtResource("4_oqgf2")]
+transform = Transform3D(-0.140392, 0.662792, 0.738518, 0.254868, 0.742038, -0.62254, -0.956729, 0.100416, -0.274213, 18.6705, 9.30102, 5.33979)
+progress = 50.1509
+
+[node name="Obstacle" parent="Path3D/Spawner2" index="0"]
+visible = false
+
+[node name="Obstacle3" parent="Path3D/Spawner2" index="1"]
+visible = false
+
+[node name="Obstacle5" parent="Path3D/Spawner2" index="2"]
+visible = false
+
+[node name="Spawner3" parent="Path3D" instance=ExtResource("4_oqgf2")]
+transform = Transform3D(0.337936, 0.0975339, 0.939913, -0.940586, -3.83704e-06, 0.340938, 0.0331218, -0.995231, 0.0921113, -5.03429, 12.7365, 5.28647)
+progress = 75.2264
+
+[node name="Obstacle" parent="Path3D/Spawner3" index="0"]
+visible = false
+
+[node name="Obstacle5" parent="Path3D/Spawner3" index="2"]
+visible = false
+
+[node name="Obstacle2" parent="Path3D/Spawner3" index="3"]
+visible = false
+
+[node name="Obstacle6" parent="Path3D/Spawner3" index="5"]
+visible = false
+
+[node name="Spawner4" parent="Path3D" instance=ExtResource("4_oqgf2")]
+transform = Transform3D(-0.0666588, 0.963638, -0.259816, -0.688278, 0.143349, 0.714037, 0.722378, 0.225504, 0.656357, -16.2509, -4.22993, -3.47693)
+progress = 100.302
+
+[node name="Obstacle" parent="Path3D/Spawner4" index="0"]
+visible = false
+
+[node name="Obstacle3" parent="Path3D/Spawner4" index="1"]
+visible = false
+
+[node name="Obstacle2" parent="Path3D/Spawner4" index="3"]
+visible = false
+
+[node name="Obstacle4" parent="Path3D/Spawner4" index="4"]
+visible = false
+
+[node name="Spawner5" parent="Path3D" instance=ExtResource("4_oqgf2")]
+transform = Transform3D(-0.0162415, -0.129171, -0.995521, -0.593402, 0.799348, -0.0948026, 0.804742, 0.586817, -0.0899975, 1.74835, -13.7502, -13.9812)
+progress = 125.377
+
+[node name="Obstacle3" parent="Path3D/Spawner5" index="1"]
+visible = false
+
+[node name="Obstacle5" parent="Path3D/Spawner5" index="2"]
+visible = false
+
+[node name="Obstacle4" parent="Path3D/Spawner5" index="4"]
+visible = false
+
+[node name="Obstacle6" parent="Path3D/Spawner5" index="5"]
+visible = false
+
+[node name="Spawner6" parent="Path3D" instance=ExtResource("4_oqgf2")]
+transform = Transform3D(0.241788, -0.960649, -0.137263, -0.792092, -0.114029, -0.602096, 0.56047, 0.253274, -0.791705, 16.8414, -1.52366, -0.798455)
+progress = 150.453
+
+[node name="Obstacle" parent="Path3D/Spawner6" index="0"]
+visible = false
+
+[node name="Obstacle5" parent="Path3D/Spawner6" index="2"]
+visible = false
+
+[node name="Obstacle6" parent="Path3D/Spawner6" index="5"]
+visible = false
+
+[node name="Spawner7" parent="Path3D" instance=ExtResource("4_oqgf2")]
+transform = Transform3D(0.190289, 0.0642465, 0.983614, 0.980377, -0.0648049, -0.186943, 0.0515229, 0.995824, -0.0756243, 3.9391, 11.9168, 11.469)
+progress = 175.528
+
+[node name="Obstacle3" parent="Path3D/Spawner7" index="1"]
+visible = false
+
+[node name="Obstacle4" parent="Path3D/Spawner7" index="4"]
+visible = false
+
+[node name="Spawner8" parent="Path3D" instance=ExtResource("4_oqgf2")]
+transform = Transform3D(-0.373279, -0.703234, 0.607543, 0.799214, 0.0874277, 0.597074, -0.471083, 0.705557, 0.531557, -19.4719, 9.01097, 7.21887)
+progress = 200.604
+
+[node name="Obstacle" parent="Path3D/Spawner8" index="0"]
+visible = false
+
+[node name="Obstacle2" parent="Path3D/Spawner8" index="3"]
+visible = false
+
+[node name="Spawner9" parent="Path3D" instance=ExtResource("4_oqgf2")]
+transform = Transform3D(0.141973, -0.871073, -0.472096, 0.672368, -0.263741, 0.69445, -0.726474, -0.41433, 0.550468, -20.3888, -9.81189, -7.5639)
+progress = 225.679
+
+[node name="Obstacle2" parent="Path3D/Spawner9" index="3"]
+visible = false
+
+[node name="Obstacle6" parent="Path3D/Spawner9" index="5"]
+visible = false
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Path3D"]
+libraries = {
+&"": SubResource("AnimationLibrary_wx8dc")
+}
+autoplay = "rail"
+
+[node name="Turrets" type="Node3D" parent="."]
+
+[node name="Turret" parent="Turrets" instance=ExtResource("5_qxfql")]
+transform = Transform3D(0.189172, -0.938194, -0.28984, 0.980732, 0.165859, 0.103227, -0.0487745, -0.303782, 0.951492, -23.8521, 4.74896, -3.31216)
+
+[node name="Turret2" parent="Turrets" instance=ExtResource("5_qxfql")]
+transform = Transform3D(-0.94646, 0.217925, -0.238166, 0.213199, 0.975937, 0.0457529, 0.242406, -0.00747351, -0.970146, -0.505933, 0.682817, -10.1338)
+
+[node name="Turret3" parent="Turrets" instance=ExtResource("5_qxfql")]
+transform = Transform3D(0.345646, -0.776441, 0.526942, -0.85935, -0.0363733, 0.510092, -0.37689, -0.629139, -0.679807, 11.6011, 1.43169, 9.98472)
+
+[node name="Turret4" parent="Turrets" instance=ExtResource("5_qxfql")]
+transform = Transform3D(-0.00135539, 0.950509, 0.310695, -0.505684, -0.268694, 0.819809, 0.862718, -0.156002, 0.481021, -13.7712, -3.87475, 4.80985)
+
+[node name="Turret5" parent="Turrets" instance=ExtResource("5_qxfql")]
+transform = Transform3D(0.0523517, 0.996668, -0.062549, 0.340979, -0.0767109, -0.936936, -0.938612, 0.0277224, -0.343859, 23.6528, 4.51139, -0.344597)
+
+[node name="Turret8" parent="Turrets" instance=ExtResource("5_qxfql")]
+transform = Transform3D(-0.622864, -0.543634, 0.562585, 0.594411, 0.138684, 0.792112, -0.508641, 0.827785, 0.236761, -13.2047, 4.25186, 21.6491)
+
+[node name="Turret9" parent="Turrets" instance=ExtResource("5_qxfql")]
+transform = Transform3D(-0.0259604, -0.950509, 0.309611, 0.431666, 0.268694, 0.861085, -0.90166, 0.156003, 0.403327, -24.5229, -0.690938, 6.53571)
+
+[node name="Turret10" parent="Turrets" instance=ExtResource("5_qxfql")]
+transform = Transform3D(0.902038, -0.40888, -0.138364, 0.43149, 0.845202, 0.315358, -0.0119974, -0.344167, 0.938832, -16.407, -3.21899, -16.5147)
+
+[node name="Turret11" parent="Turrets" instance=ExtResource("5_qxfql")]
+transform = Transform3D(-0.0466508, -0.996668, -0.0669086, -0.257304, 0.0767107, -0.963281, 0.965204, -0.027722, -0.260025, 16.2957, 4.92873, -0.565301)
+
+[node name="Turret12" parent="Turrets" instance=ExtResource("5_qxfql")]
+transform = Transform3D(-0.801438, -0.3224, 0.503742, -0.504364, -0.088333, -0.858961, 0.321426, -0.942473, -0.0918136, 4.89605, 14.0468, 14.7454)
+
+[node name="Turret13" parent="Turrets" instance=ExtResource("5_qxfql")]
+transform = Transform3D(0.537131, -0.217926, -0.814861, -0.126327, -0.975937, 0.177733, -0.833985, 0.00747317, -0.551736, -2.99248, -9.92503, -9.90556)
+
+[node name="Turret14" parent="Turrets" instance=ExtResource("5_qxfql")]
+transform = Transform3D(0.76008, 0.442691, -0.475712, 0.630504, -0.679601, 0.374976, -0.157295, -0.584951, -0.79567, 18.3919, -10.1699, -8.75191)
+
+[node name="Turret15" parent="Turrets" instance=ExtResource("5_qxfql")]
+transform = Transform3D(-0.0634549, 0.776441, 0.626987, 0.997772, 0.0363735, 0.0559368, 0.020626, 0.629139, -0.777019, 18.8881, 1.60529, 15.694)
+
+[node name="Terrain" parent="." instance=ExtResource("6_ha31o")]
+
+[node name="PauseMenu" parent="." instance=ExtResource("7_pa6b8")]
+visible = false
+
+[node name="LoseMenu" parent="." instance=ExtResource("8_754fn")]
+unique_name_in_owner = true
+
+[node name="PlayerLife" parent="." instance=ExtResource("9_bvt00")]
+unique_name_in_owner = true
+
+[node name="Gameplay" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("10_oqgf2")
+autoplay = true
+
+[connection signal="timeout" from="Path3D/PathFollow3D/Player/Death" to="Path3D/PathFollow3D/Player" method="_on_death_timeout"]
+[connection signal="area_entered" from="Path3D/PathFollow3D/ActivateTurret" to="Path3D/PathFollow3D/Player" method="_on_activate_turret_area_entered"]
+[connection signal="area_exited" from="Path3D/PathFollow3D/ActivateTurret" to="Path3D/PathFollow3D/Player" method="_on_activate_turret_area_exited"]
+[connection signal="area_exited" from="Path3D/PathFollow3D/RestartObstacles" to="Path3D/PathFollow3D/RestartObstacles" method="_on_area_exited"]
+
+[editable path="Path3D/Spawner"]
+[editable path="Path3D/Spawner2"]
+[editable path="Path3D/Spawner3"]
+[editable path="Path3D/Spawner4"]
+[editable path="Path3D/Spawner5"]
+[editable path="Path3D/Spawner6"]
+[editable path="Path3D/Spawner7"]
+[editable path="Path3D/Spawner8"]
+[editable path="Path3D/Spawner9"]

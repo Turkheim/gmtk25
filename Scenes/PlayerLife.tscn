@@ -1,0 +1,64 @@
+[gd_scene load_steps=6 format=3 uid="uid://mtfwldcgvell"]
+
+[ext_resource type="Script" uid="uid://dqug22gq80408" path="res://Scripts/player_life.gd" id="1_oah78"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ds38o"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xybr2"]
+bg_color = Color(0.266039, 0.712985, 0, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_cw8ws"]
+bg_color = Color(0.230315, 0.230315, 0.230315, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+expand_margin_left = 5.0
+expand_margin_top = 5.0
+expand_margin_right = 5.0
+expand_margin_bottom = 5.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hivfg"]
+bg_color = Color(1, 0.29022, 0.542759, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[node name="PlayerLife" type="ProgressBar"]
+z_index = 1
+anchors_preset = -1
+anchor_left = 0.0833333
+anchor_top = 0.0540123
+anchor_right = 0.923611
+anchor_bottom = 0.12037
+grow_horizontal = 2
+theme_override_styles/background = SubResource("StyleBoxEmpty_ds38o")
+theme_override_styles/fill = SubResource("StyleBoxFlat_xybr2")
+value = 50.0
+show_percentage = false
+script = ExtResource("1_oah78")
+metadata/_edit_use_anchors_ = true
+
+[node name="DamageBar" type="ProgressBar" parent="."]
+z_index = -1
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/background = SubResource("StyleBoxFlat_cw8ws")
+theme_override_styles/fill = SubResource("StyleBoxFlat_hivfg")
+value = 60.0
+show_percentage = false
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.4
+one_shot = true
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

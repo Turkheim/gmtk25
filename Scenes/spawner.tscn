@@ -1,0 +1,28 @@
+[gd_scene load_steps=2 format=3 uid="uid://btmuvgs554pe2"]
+
+[ext_resource type="PackedScene" uid="uid://blyfeuat57hw" path="res://Scenes/obstacle.tscn" id="1_2bop2"]
+
+[node name="Spawner" type="PathFollow3D"]
+transform = Transform3D(-0.233589, 0.867583, -0.440803, 0.68965, -0.170454, -0.706661, -0.685434, -0.467166, -0.560786, 0, 0, 0)
+progress = 25.0755
+
+[node name="Obstacle" parent="." instance=ExtResource("1_2bop2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+
+[node name="Obstacle3" parent="." instance=ExtResource("1_2bop2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 1, 0)
+
+[node name="Obstacle5" parent="." instance=ExtResource("1_2bop2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 1, 0)
+
+[node name="Obstacle2" parent="." instance=ExtResource("1_2bop2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
+is_enabled = false
+
+[node name="Obstacle4" parent="." instance=ExtResource("1_2bop2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, -1, 0)
+is_enabled = false
+
+[node name="Obstacle6" parent="." instance=ExtResource("1_2bop2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, -1, 0)
+is_enabled = false
